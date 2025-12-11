@@ -30,8 +30,10 @@ class NistSearchPanel(QWidget):
         btn_layout = QHBoxLayout()
         self.search_btn = QPushButton('Search')
         self.overlay_btn = QPushButton('Overlay Selected')
+        self.toggle_visibility_btn = QPushButton('Toggle Visibility')
         btn_layout.addWidget(self.search_btn)
         btn_layout.addWidget(self.overlay_btn)
+        btn_layout.addWidget(self.toggle_visibility_btn)
         layout.addLayout(btn_layout)
 
         self.results_list = QListWidget()
@@ -41,6 +43,7 @@ class NistSearchPanel(QWidget):
 
         self.search_btn.clicked.connect(self.on_search)
         self.overlay_btn.clicked.connect(self.on_overlay_selected)
+        self.toggle_visibility_btn.clicked.connect(self.on_toggle_visibility)
 
     def on_search(self):
         element = self.element_input.text().strip()
@@ -67,7 +70,16 @@ class NistSearchPanel(QWidget):
         if sel < 0 or sel >= len(self.results):
             return
         r: LineResult = self.results[sel]
-        overlay = LineOverlay(id=r.id, element=r.element, ion=r.ion, x=r.wavelength_nm, metadata=r.metadata)
+        # Resolve graph_panel and find selected dataset to attach overlay to
+        ds_id = None
+        if graph_panel:
+            try:
+                sel_item = graph_panel.list_widget.currentItem()
+                if sel_item:
+                    ds_id = sel_item.text()
+            except Exception:
+                ds_id = None
+        overlay = LineOverlay(id=r.id, element=r.element, ion=r.ion, x=r.wavelength_nm, dataset_id=ds_id, energy_lower=r.energy_lower, energy_upper=r.energy_upper, metadata=r.metadata)
         # parent should be main window so it has graph_panel; attempt to find graph_panel
         parent = self.parent()
         if not parent:
@@ -84,3 +96,25 @@ class NistSearchPanel(QWidget):
             current_overlays = graph_panel.manager.line_overlay_manager.lines if hasattr(graph_panel.manager, 'line_overlay_manager') else []
             new_overlays = current_overlays + [overlay]
             graph_panel.manager.set_line_overlays(new_overlays)
+
+    def on_toggle_visibility(self):
+        sel = self.results_list.currentRow()
+        if sel < 0 or sel >= len(self.results):
+            return
+        r: LineResult = self.results[sel]
+        parent = self.parent()
+        if not parent:
+            return
+        graph_panel = None
+        try:
+            graph_panel = parent.graph_panel
+        except Exception:
+            if hasattr(parent, 'parent') and parent.parent():
+                graph_panel = getattr(parent.parent(), 'graph_panel', None)
+        if graph_panel and hasattr(graph_panel, 'manager'):
+            # toggle visibility
+            current = [ln for ln in graph_panel.manager.line_overlay_manager.lines if ln.id == r.id]
+            if current:
+                ln = current[0]
+                graph_panel.manager.line_overlay_manager.toggle_visibility(ln.id, not ln.visible)
+                graph_panel.manager._redraw()

@@ -21,7 +21,9 @@ class NotesPanel(QWidget):
         btn_layout = QHBoxLayout()
         self.btn_refresh = QPushButton("Refresh")
         self.btn_delete = QPushButton("Delete Note")
+        self.btn_edit = QPushButton("Edit Note")
         btn_layout.addWidget(self.btn_refresh)
+        btn_layout.addWidget(self.btn_edit)
         btn_layout.addWidget(self.btn_delete)
         layout.addLayout(btn_layout)
 
@@ -34,6 +36,7 @@ class NotesPanel(QWidget):
         self.list_widget.itemSelectionChanged.connect(self.on_select)
         self.btn_refresh.clicked.connect(self.refresh_notes_list)
         self.btn_delete.clicked.connect(self.delete_note)
+        self.btn_edit.clicked.connect(self.edit_note)
 
     def refresh_notes_list(self):
         self.list_widget.clear()
@@ -59,4 +62,22 @@ class NotesPanel(QWidget):
         nid = item.text().split(':', 1)[0]
         self.note_repo.remove_note(nid)
         self.refresh_notes_list()
+
+    def edit_note(self):
+        item = self.list_widget.currentItem()
+        if not item:
+            return
+        nid = item.text().split(':', 1)[0]
+        note = self.note_repo.get(nid)
+        if not note:
+            return
+        from PySide6.QtWidgets import QInputDialog
+        text, ok = QInputDialog.getText(self, 'Edit Note', 'Note text:', text=note.text)
+        if not ok:
+            return
+        note.text = text
+        self.note_repo.update_note(note)
+        self.refresh_notes_list()
+
+    
         

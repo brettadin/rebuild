@@ -73,6 +73,35 @@ class GraphManager:
         if self.figure is not None:
             self._redraw()
 
+    def get_nearest_datapoint(self, x: float, tolerance: float = 0.1) -> Optional[float]:
+        """Return nearest x datapoint among all traces if within tolerance."""
+        best = None
+        best_dist = float('inf')
+        for vm in self.traces.values():
+            try:
+                xs = vm.get_x()
+            except Exception:
+                xs = []
+            for xv in xs:
+                d = abs(xv - x)
+                if d < best_dist and d <= tolerance:
+                    best_dist = d
+                    best = xv
+        return best
+
+    def find_nearest_datapoint(self, x_value: float, tolerance: float = 0.5):
+        """Return tuple (trace_id, x, y, dist) of nearest data point to x_value across traces
+        within tolerance. If none found, return None."""
+        best = None
+        for vm in self.traces.values():
+            xs = vm.get_x()
+            ys = vm.get_y()
+            for xi, yi in zip(xs, ys):
+                d = abs(xi - x_value)
+                if d <= tolerance and (best is None or d < best[3]):
+                    best = (vm.id, xi, yi, d)
+        return best
+
     def set_unit_conversion(self, enabled: bool):
         self.unit_conversion = enabled
         if self.figure is not None:

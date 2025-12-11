@@ -31,8 +31,20 @@ class NoteRepo:
         self._notes.append(note)
         self.save()
 
+    
+
     def remove_note(self, note_id: str):
         self._notes = [n for n in self._notes if n.id != note_id]
+        self.save()
+
+    def update_note(self, note: NoteModel):
+        for i, n in enumerate(self._notes):
+            if n.id == note.id:
+                self._notes[i] = note
+                self.save()
+                return
+        # If not found, append
+        self._notes.append(note)
         self.save()
 
     def list(self):

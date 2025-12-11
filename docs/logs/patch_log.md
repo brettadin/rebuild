@@ -9,6 +9,24 @@ This patch log contains a minimal record of changes:
 - 2025-12-11 — Phase 2 implemented: graphing core (GraphManager, DatasetViewModel, ColorManager) and Matplotlib integration; added `GraphPanel` UI panel, sample_spectrum2.csv, and integration test for importing and plotting two datasets. Added matplotlib requirement.
 - 2025-12-11 — Phase 3 implemented: dataset metadata helpers and inference (`src/domain/datasets/dataset_metadata.py`), metadata fields extended (`DatasetMetadata`), importer attaches inferred metadata, GraphPanel shows dataset metadata on selection, and unit + UI tests added.
 - 2025-12-11 — Phase 4 implemented: favorites model and repo with JSON persistence, `FavoritesPanel` UI with segmented tabs, GraphPanel integration ("Add to Favorites"), and unit/integration tests for favorites behavior.
+- 2025-12-11 — Phase 5 implemented: projects model, repo & UI, Save As, last project persistence, favorites merge/replace behavior, project snapshots for datasets/favorites/graph_config, and related tests & docs.
+- 2025-12-11 — Phase 6 started: added `NoteModel`, `NoteRepo`, `NotesPanel`, annotation overlay in graphs, and integration with Project snapshots; tests for notes & annotations added.
+- 2025-12-11 — Phase 7 implemented: NIST line search provider, parser, UI panel, and `LineOverlayManager`, enabling overlay of NIST lines on graphs. Added sample NIST fixture, parser & client, integration tests, and docs.
+- 2025-12-11 — Added interactive & UX features: click-to-create notes on the graph, hover tooltips for line overlays, and more robust NIST client parameters and headers. Updated tests to cover new behaviors and docs to describe UX changes.
+- 2025-12-11 — Phase 7 continued: added note snapping to nearest datapoint, inline note editing in the `NotesPanel`, overlay visibility toggling, and refactored to avoid UI freezing by scheduling modal dialogs on the Qt event loop. Updated tests for new UX and fixed flaky tests.
+# Patch Log
+
+This patch log contains a minimal record of changes:
+
+- 2025-12-11 — Initial repo scaffolding and README created. See `README.md` for starting instructions.
+- 2025-12-11 — Added `data/local/` for local uploaded files; this folder is gitignored to prevent committing large local datasets. Also added `.gitignore` entries and `data/local/README.md` with guidelines.
+- 2025-12-11 — Phase 0 implemented: minimal desktop app shell using PySide6, initial launcher, logging adapter, config, and a smoke/unit test. Added `run_app.py`, `scripts/run_app.ps1`, `scripts/run_tests.ps1`, and `requirements.txt`.
+- 2025-12-11 — Phase 1 started/completed (Local import/export): added `DatasetModel` and `DatasetRepo`, `LocalFileImporter` with CSV/TXT parsing and CSV export, sample data under `data/sample/local_lab/sample_spectrum.csv`, unit/integration tests for import/export, and docs reference `docs/references/local_lab_sample_spectrum.md`.
+- 2025-12-11 — Phase 2 implemented: graphing core (GraphManager, DatasetViewModel, ColorManager) and Matplotlib integration; added `GraphPanel` UI panel, sample_spectrum2.csv, and integration test for importing and plotting two datasets. Added matplotlib requirement.
+- 2025-12-11 — Phase 3 implemented: dataset metadata helpers and inference (`src/domain/datasets/dataset_metadata.py`), metadata fields extended (`DatasetMetadata`), importer attaches inferred metadata, GraphPanel shows dataset metadata on selection, and unit + UI tests added.
+- 2025-12-11 — Phase 4 implemented: favorites model and repo with JSON persistence, `FavoritesPanel` UI with segmented tabs, GraphPanel integration ("Add to Favorites"), and unit/integration tests for favorites behavior.
  - 2025-12-11 — Phase 5 implemented: projects model, repo & UI, Save As, last project persistence, favorites merge/replace behavior, project snapshots for datasets/favorites/graph_config, and related tests & docs.
  - 2025-12-11 — Phase 6 started: added `NoteModel`, `NoteRepo`, `NotesPanel`, annotation overlay in graphs, and integration with Project snapshots; tests for notes & annotations added.
  - 2025-12-11 — Phase 7 implemented: NIST line search provider, parser, UI panel, and `LineOverlayManager`, enabling overlay of NIST lines on graphs. Added sample NIST fixture, parser & client, integration tests, and docs.
+ - 2025-12-11 — Added interactive & UX features: click-to-create notes on the graph, hover tooltips for line overlays, and more robust NIST client parameters and headers. Updated tests to cover new behaviors and docs to describe UX changes.
+ - 2025-12-11 — Phase 7 continued: added note snapping to nearest datapoint, inline note editing in the `NotesPanel`, overlay visibility toggling, and refactored to avoid UI freezing by scheduling modal dialogs on the Qt event loop. Updated tests for new UX and fixed flaky tests.

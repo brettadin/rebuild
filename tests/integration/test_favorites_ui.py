@@ -24,7 +24,21 @@ def test_favorite_dataset_via_graph_panel(qtbot):
     repo = get_dataset_repo()
     repo.add(ds)
     gp._refresh_list()
-    gp.list_widget.setCurrentRow(0)
+    # Select the imported dataset (may not be at index 0 if repo had prior entries)
+    idx = None
+    for i in range(gp.list_widget.count()):
+        if gp.list_widget.item(i).text() == ds.id:
+            idx = i
+            break
+    if idx is None:
+        # ensure it is present; if not, add and refresh again
+        repo.add(ds)
+        gp._refresh_list()
+        for i in range(gp.list_widget.count()):
+            if gp.list_widget.item(i).text() == ds.id:
+                idx = i
+                break
+    gp.list_widget.setCurrentRow(idx if idx is not None else 0)
     gp.add_to_favorites()
     fav.refresh()
     # favorites repo should contain dataset id

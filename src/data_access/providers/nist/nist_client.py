@@ -12,14 +12,26 @@ class NistClient:
         self.base_url = base_url or 'https://physics.nist.gov/cgi-bin/ASD/lines1.pl'
         self.use_fixture = use_fixture
         self.fixture_path = fixture_path
+        self._session = None
 
     def search_lines_online(self, params: Dict[str, Any]) -> List[Dict[str, Any]]:
         # In production, this should perform a GET or POST according to NIST form.
         try:
             import requests
+            from requests.adapters import HTTPAdapter
+            from urllib3.util.retry import Retry
         except Exception:
             return []
-        r = requests.get(self.base_url, params=params, timeout=10)
+        # create a session with retries for robust calls
+        if self._session is None:
+            s = requests.Session()
+            retry = Retry(total=2, backoff_factor=0.3, status_forcelist=(500, 502, 504))
+            adapter = HTTPAdapter(max_retries=retry)
+            s.mount('http://', adapter)
+            s.mount('https://', adapter)
+            s.headers.update({'User-Agent': 'RebuildSpectro/1.0 (+https://github.com/brettadin/rebuild)'})
+            self._session = s
+        r = self._session.get(self.base_url, params=params, timeout=10)
         r.raise_for_status()
         return [r.text]
 
@@ -31,6 +43,8 @@ class NistClient:
                 return json.load(f)
         params = {
             'spectrum': f"{element} {ion}" if ion else element,
+            'ol': '1',
+            'format': 'ASCII',
         }
         if low_wl is not None:
             params['low_wl'] = low_wl
