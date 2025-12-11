@@ -17,10 +17,11 @@ Quick links (local):
 - Rebuild spec: `Rebuild.md`
 - Architecture: `Rebuild_Architecture.md`
 
-Minimal repo structure (already created):
+- Minimal repo structure (already created):
 - `src/` — Application source (UI, graphing, search, data_access, domain, projects, notes, config, platform)
 - `data/` — Real sample/cached data and fixtures
 - `docs/` — Human-facing documentation and developer logs
+   - `docs/project_panel.md` — Documentation for the Project Panel UI (Phase 5)
 - `tests/` — Unit & integration tests
 - `scripts/` — Helper scripts (fetching sample data, build, tests)
 - `assets/` — Icons & UI assets

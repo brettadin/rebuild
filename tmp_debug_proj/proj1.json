@@ -1,0 +1,38 @@
+{
+  "name": "proj1",
+  "description": null,
+  "dataset_ids": [
+    "ds1"
+  ],
+  "favorites": {
+    "datasets": [],
+    "elements": [],
+    "molecules": [],
+    "planets": [],
+    "moons": [],
+    "stars": []
+  },
+  "graph_config": {},
+  "datasets": [
+    {
+      "id": "ds1",
+      "x": [
+        1,
+        2
+      ],
+      "y": [
+        10,
+        20
+      ],
+      "metadata": {
+        "object_type": "unknown",
+        "phase": "unknown",
+        "source": "local",
+        "tags": [],
+        "units_x": "nm",
+        "units_y": "",
+        "provenance": null
+      }
+    }
+  ]
+}

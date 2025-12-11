@@ -105,3 +105,9 @@ class GraphPanel(QWidget):
         units = f"{md.units_x}/{md.units_y}" if md.units_x or md.units_y else ''
         self.meta_units.setText(units)
         self.meta_filename.setText(md.filename or '')
+
+    def get_graph_config(self):
+        return {
+            'trace_ids': [vm.id for vm in self.manager.list_traces()],
+            'unit_conversion': self.manager.unit_conversion,
+        }

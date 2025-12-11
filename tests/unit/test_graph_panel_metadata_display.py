@@ -19,10 +19,13 @@ def test_graph_panel_selection_updates_metadata(qtbot):
     sample = Path(ROOT) / 'data' / 'sample' / 'local_lab' / 'sample_spectrum.csv'
     ds = importer.import_file(str(sample))
     repo = get_dataset_repo()
+    # Clear existing datasets to avoid collision with other tests
+    repo._datasets = {}
     repo.add(ds)
     gp._refresh_list()
     # select the first item
     gp.list_widget.setCurrentRow(0)
+    gp.on_selection_changed()
     # verify metadata displayed
     assert gp.meta_filename.text() == 'sample_spectrum.csv'
     assert gp.meta_source.text() == 'local'

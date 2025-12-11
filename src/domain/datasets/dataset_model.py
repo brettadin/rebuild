@@ -37,5 +37,6 @@ class DatasetModel:
                 "units_x": self.metadata.units_x,
                 "units_y": self.metadata.units_y,
                 "provenance": self.metadata.provenance,
+                "filename": self.metadata.filename,
             },
         }
