@@ -4,6 +4,7 @@ from src.graphing.core.dataset_view_model import DatasetViewModel
 from src.graphing.core.color_manager import ColorManager
 from src.domain.datasets.dataset_model import DatasetModel
 from src.graphing.overlays.annotation_markers import AnnotationManager, Annotation
+from src.graphing.overlays.line_overlays import LineOverlayManager, LineOverlay
 
 
 class GraphManager:
@@ -13,6 +14,7 @@ class GraphManager:
         self.color_manager = ColorManager()
         self.unit_conversion = False
         self.annotation_manager = AnnotationManager()
+        self.line_overlay_manager = LineOverlayManager()
 
     def add_dataset(self, ds: DatasetModel, label: Optional[str] = None, color: Optional[str] = None):
         if ds.id in self.traces:
@@ -40,8 +42,9 @@ class GraphManager:
         if self.unit_conversion:
             x = self._convert_units(x, vm.dataset.metadata.units_x)
         ax.plot(x, y, label=vm.label, color=vm.color)
-        # draw annotations after plotting
+        # draw annotations and line overlays after plotting
         self.annotation_manager.draw(ax)
+        self.line_overlay_manager.draw(ax)
         ax.legend()
         self.figure.canvas.draw_idle()
 
@@ -54,13 +57,19 @@ class GraphManager:
             if self.unit_conversion:
                 x = self._convert_units(x, vm.dataset.metadata.units_x)
             ax.plot(x, y, label=vm.label, color=vm.color)
-        # draw annotations after plotting
+        # draw annotations and overlays after plotting
         self.annotation_manager.draw(ax)
+        self.line_overlay_manager.draw(ax)
         ax.legend()
         self.figure.canvas.draw_idle()
 
     def set_annotations(self, annotations: List[Annotation]):
         self.annotation_manager.set_annotations(annotations)
+        if self.figure is not None:
+            self._redraw()
+
+    def set_line_overlays(self, lines: List[LineOverlay]):
+        self.line_overlay_manager.set_lines(lines)
         if self.figure is not None:
             self._redraw()
 

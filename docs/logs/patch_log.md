@@ -11,3 +11,4 @@ This patch log contains a minimal record of changes:
 - 2025-12-11 — Phase 4 implemented: favorites model and repo with JSON persistence, `FavoritesPanel` UI with segmented tabs, GraphPanel integration ("Add to Favorites"), and unit/integration tests for favorites behavior.
  - 2025-12-11 — Phase 5 implemented: projects model, repo & UI, Save As, last project persistence, favorites merge/replace behavior, project snapshots for datasets/favorites/graph_config, and related tests & docs.
  - 2025-12-11 — Phase 6 started: added `NoteModel`, `NoteRepo`, `NotesPanel`, annotation overlay in graphs, and integration with Project snapshots; tests for notes & annotations added.
+ - 2025-12-11 — Phase 7 implemented: NIST line search provider, parser, UI panel, and `LineOverlayManager`, enabling overlay of NIST lines on graphs. Added sample NIST fixture, parser & client, integration tests, and docs.

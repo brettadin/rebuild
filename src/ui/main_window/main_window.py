@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QLabel, QMenuBar, QMenu, QDockWidget
 from PySide6.QtGui import QAction
 from src.ui.panels.project_panel.project_panel import ProjectPanel
 from src.ui.panels.graph_panel.graph_panel import GraphPanel
+from src.ui.panels.search_panel.nist_panel import NistSearchPanel
 from src.ui.panels.notes_panel.notes_panel import NotesPanel
 from src.domain.datasets.registry import get_dataset_repo
 from pathlib import Path
@@ -100,6 +101,12 @@ class MainWindow(QMainWindow):
         notes_dock = QDockWidget("Notes", self)
         notes_dock.setWidget(self.notes_panel)
         self.addDockWidget(Qt.LeftDockWidgetArea, notes_dock)
+
+        # NIST search panel dock on the left
+        self.nist_panel = NistSearchPanel(self)
+        nist_dock = QDockWidget('NIST Search', self)
+        nist_dock.setWidget(self.nist_panel)
+        self.addDockWidget(Qt.LeftDockWidgetArea, nist_dock)
 
         self.current_project_name = None
         # Try to auto-load last project from storage if configured

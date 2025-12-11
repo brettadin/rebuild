@@ -1,0 +1,22 @@
+[
+  {
+    "id": "FeI_1",
+    "element": "Fe",
+    "ion": "I",
+    "wavelength_nm": 386.0,
+    "wavenumber_cm": 25900.0,
+    "energy_lower": 0.0,
+    "energy_upper": 1.0,
+    "metadata": {"source": "NIST ASD"}
+  },
+  {
+    "id": "FeI_2",
+    "element": "Fe",
+    "ion": "I",
+    "wavelength_nm": 387.0,
+    "wavenumber_cm": 25800.0,
+    "energy_lower": 0.0,
+    "energy_upper": 1.0,
+    "metadata": {"source": "NIST ASD"}
+  }
+]
