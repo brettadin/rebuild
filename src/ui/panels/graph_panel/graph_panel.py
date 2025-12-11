@@ -16,12 +16,14 @@ class GraphPanel(QWidget):
         self.list_widget = QListWidget()
         self.add_btn = QPushButton("Add to Graph")
         self.remove_btn = QPushButton("Remove from Graph")
+        self.fav_btn = QPushButton("Add to Favorites")
         self.convert_checkbox = QCheckBox("Convert nm to cm^-1")
 
         lay = QVBoxLayout()
         controls = QHBoxLayout()
         controls.addWidget(self.add_btn)
         controls.addWidget(self.remove_btn)
+        controls.addWidget(self.fav_btn)
         controls.addWidget(self.convert_checkbox)
         lay.addLayout(controls)
         lay.addWidget(self.list_widget)
@@ -31,6 +33,7 @@ class GraphPanel(QWidget):
         self.add_btn.clicked.connect(self.add_selected)
         self.remove_btn.clicked.connect(self.remove_selected)
         self.convert_checkbox.toggled.connect(self.toggle_conversion)
+        self.fav_btn.clicked.connect(self.add_to_favorites)
 
         # Metadata display
         self.metadata_layout = QFormLayout()
@@ -66,6 +69,18 @@ class GraphPanel(QWidget):
             return
         ds = self.repo.get(item.text())
         self.manager.add_dataset(ds, label=item.text())
+
+    def add_to_favorites(self):
+        item = self.list_widget.currentItem()
+        if not item:
+            return
+        ds = self.repo.get(item.text())
+        if not ds:
+            return
+        from src.domain.favorites.registry import get_favorites_repo
+        fav_repo = get_favorites_repo()
+        fav_repo.add_favorite('datasets', ds.id)
+        # prefer to keep UI consistent if a favorites panel exists in the app. For now, refresh isn't called.
 
     def remove_selected(self):
         item = self.list_widget.currentItem()

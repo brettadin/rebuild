@@ -12,3 +12,6 @@ providers:
 
 logging:
   level: INFO
+paths:
+  storage: data/storage
+  favorites_file: favorites.json
