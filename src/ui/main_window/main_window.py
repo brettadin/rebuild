@@ -3,6 +3,7 @@ from PySide6.QtGui import QAction
 from src.ui.panels.project_panel.project_panel import ProjectPanel
 from src.ui.panels.graph_panel.graph_panel import GraphPanel
 from src.ui.panels.search_panel.nist_panel import NistSearchPanel
+from src.ui.panels.search_panel.molecule_panel import MoleculeSearchPanel
 from src.ui.panels.search_panel.solar_panel import SolarSystemSearchPanel
 from src.ui.panels.notes_panel.notes_panel import NotesPanel
 from src.domain.datasets.registry import get_dataset_repo
@@ -114,6 +115,12 @@ class MainWindow(QMainWindow):
         solar_dock = QDockWidget('Solar System (PDS) Search', self)
         solar_dock.setWidget(self.solar_panel)
         self.addDockWidget(Qt.LeftDockWidgetArea, solar_dock)
+
+        # Molecule search (HITRAN-like) dock on the left
+        self.molecule_panel = MoleculeSearchPanel(self)
+        molecule_dock = QDockWidget('Molecule (HITRAN) Search', self)
+        molecule_dock.setWidget(self.molecule_panel)
+        self.addDockWidget(Qt.LeftDockWidgetArea, molecule_dock)
 
         self.current_project_name = None
         # Try to auto-load last project from storage if configured

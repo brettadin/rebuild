@@ -84,3 +84,7 @@ Phase 0: run & test the minimal app locally
 
    - Windows PowerShell: `scripts\run_tests.ps1` or `python -m pytest -q` in the activated venv.
 
+Tip: If you run tests in CI or headless environments, you can disable interactive popup dialogs by setting `REBUILD_DISABLE_AUTO_POPUPS=1` before running `pytest` or by using `scripts\run_tests.ps1`, which sets the flag for you.
+
+If logs are accidentally duplicated in `docs/logs`, run `python scripts/normalize_logs.py docs/logs/dev_log.md docs/logs/patch_log.md` to clean them up.
+

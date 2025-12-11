@@ -1,0 +1,14 @@
+{
+  "id": "co2_ir_sample_01",
+  "molecule": "CO2",
+  "phase": "gas",
+  "spectrum": {
+    "units_x": "nm",
+    "units_y": "arb",
+    "x": [2000, 2100, 2200, 2300],
+    "y": [0.1, 0.5, 0.3, 0.2]
+  },
+  "metadata": {
+    "reference": "Sample HITRAN CO2 subset"
+  }
+}

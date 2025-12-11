@@ -7,7 +7,7 @@ Contributing workflow
 1. Pick one feature at a time from `Rebuild.md`.
 2. Create a new feature branch from `main` (or `dev`) named `feature/<short-description>`.
 3. Implement the feature and add tests (unit + integration as needed).
-4. Update `docs/logs/dev_log.md` and `docs/logs/patch_log.md` describing the change.
+4. Update `docs/logs/dev_log.md` and `docs/logs/patch_log.md` describing the change. Do not paste entire historical blocks — append a single-line entry describing the change. If you're automating changes, ensure no duplicate entries are added.
 5. File a PR and request review: do not merge until tests pass and documentation is updated.
 
 Notes about local data
@@ -20,3 +20,5 @@ Developer expectations
 - All sample data must come from a real source and be documented in `docs/references/`.
 - Tests should use the `tests/fixtures` directory and reference live-cited sources.
 - Keep changes focused: one change per PR, where practicable.
+
+If you accidentally duplicate entries in the logs, run `python scripts/normalize_logs.py docs/logs/dev_log.md docs/logs/patch_log.md` to deduplicate before committing.

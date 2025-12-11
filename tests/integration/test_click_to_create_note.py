@@ -16,6 +16,8 @@ def test_add_note_at_and_click_handler(tmp_path, qtbot, monkeypatch):
 
     gp = GraphPanel()
     qtbot.addWidget(gp)
+    # ensure click-to-create behaviour is enabled for this test
+    gp.enable_click_to_create_notes_cb.setChecked(True)
     # add dataset to graph
     gp.manager.add_dataset(ds)
 

@@ -4,7 +4,7 @@ from src.domain.datasets.registry import get_dataset_repo
 from src.notes.registry import get_note_repo
 
 
-def test_snap_to_nearest_datapoint(qtbot):
+def test_snap_to_nearest_datapoint(qtbot, monkeypatch):
     repo = get_note_repo()
     repo.clear()
     ds_repo = get_dataset_repo()
@@ -15,6 +15,11 @@ def test_snap_to_nearest_datapoint(qtbot):
     gp = GraphPanel()
     qtbot.addWidget(gp)
     gp.manager.add_dataset(ds)
+    gp.enable_click_to_create_notes_cb.setChecked(True)
+    # Ensure QInputDialog returns a value so the dialog path exercises add_note_at
+    from PySide6.QtWidgets import QInputDialog
+    monkeypatch.setattr(QInputDialog, 'getText', lambda *args, **kwargs: ('snapped note', True))
+    gp.enable_click_to_create_notes_cb.setChecked(True)
     # simulate click near 2.05 which should snap to 2.0
     class DummyEvent:
         def __init__(self, xdata, button=1):

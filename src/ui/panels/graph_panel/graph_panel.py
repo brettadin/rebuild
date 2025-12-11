@@ -7,6 +7,7 @@ from src.notes.registry import get_note_repo
 from src.notes.note_model import NoteModel
 import uuid
 from PySide6.QtGui import QCursor
+import os
 from PySide6.QtCore import QTimer
 import time
 
@@ -55,6 +56,12 @@ class GraphPanel(QWidget):
         self.show_dataset_overlays_cb.setChecked(True)
         controls.addWidget(self.show_dataset_overlays_cb)
         self.show_dataset_overlays_cb.toggled.connect(self._on_toggle_dataset_overlays)
+        # Option to disable click-to-create note dialogs (useful for automated runs / testing)
+        self.enable_click_to_create_notes_cb = QCheckBox("Enable click-to-create notes")
+        # default behaviour: enabled, unless environment explicitly disables popups (useful in CI/tests)
+        disable_popup_flag = os.environ.get('REBUILD_DISABLE_AUTO_POPUPS', '').lower() in ('1', 'true', 'yes')
+        self.enable_click_to_create_notes_cb.setChecked(not disable_popup_flag)
+        controls.addWidget(self.enable_click_to_create_notes_cb)
         # connect matplotlib events for click/hover interactions
         self.canvas.mpl_connect('button_press_event', self._on_canvas_click)
         self.canvas.mpl_connect('motion_notify_event', self._on_mouse_move)
@@ -247,6 +254,9 @@ class GraphPanel(QWidget):
                     x = snapped
             # ask for note text
             # Schedule a modal dialog on the Qt event loop to avoid blocking the matplotlib callback thread
+            if not getattr(self, 'enable_click_to_create_notes_cb', None) or not self.enable_click_to_create_notes_cb.isChecked():
+                # click-to-create is disabled (either via UI or in automation); do nothing
+                return
             def show_dialog():
                 from PySide6.QtWidgets import QInputDialog
                 text, ok = QInputDialog.getText(self, "Add Note at position", "Note text:")

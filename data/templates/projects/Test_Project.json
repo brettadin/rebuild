@@ -1,0 +1,21 @@
+{
+  "name": "Test_Project",
+  "description": null,
+  "dataset_ids": [],
+  "favorites": {
+    "datasets": [
+      "ds1"
+    ],
+    "elements": [],
+    "molecules": [],
+    "planets": [],
+    "moons": [],
+    "stars": []
+  },
+  "graph_config": {
+    "trace_ids": [],
+    "unit_conversion": false
+  },
+  "datasets": [],
+  "notes": []
+}

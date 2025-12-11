@@ -15,6 +15,8 @@ def test_nonblocking_click_prompt(tmp_path, qtbot, monkeypatch):
     gp = GraphPanel()
     qtbot.addWidget(gp)
     gp.manager.add_dataset(ds)
+    # ensure click-to-create behaviour is enabled for this test
+    gp.enable_click_to_create_notes_cb.setChecked(True)
 
     # Patch QInputDialog to simulate user entry and ensure it is called asynchronously
     called = {'ok': False}
