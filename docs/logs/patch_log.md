@@ -1,5 +1,61 @@
 # Patch Log
 
+This patch log is a concise record of changes:
+
+- 2025-12-11 — Repo scaffolding (README, initial structure).
+- 2025-12-11 — Phase 0: App shell implemented (PySide6), launcher, logging.
+- 2025-12-11 — Phase 1: Local import/export (CSV/TXT) and dataset model.
+- 2025-12-11 — Phase 2: Graphing core and GraphPanel UI.
+- 2025-12-11 — Phase 3–5: Metadata, Favorites, and Projects implemented.
+- 2025-12-11 — Phase 6: Notes & Annotations—models, UI, overlays.
+- 2025-12-11 — Phase 7: NIST line search + overlays, tooltips, and UX polish.
+- 2025-12-11 — Phase 8: PDS Solar System search — `PdsClient`, parser, `PlanetSearcher`, `PlanetModel`, UI (`SolarSystemSearchPanel`), sample PDS fixture and integration test.
+# Patch Log
+
+This patch log contains a minimal record of changes:
+
+- 2025-12-11 — Initial repo scaffolding and README created.
+- 2025-12-11 — Added `data/local/`, `.gitignore`, and `data/local/README.md`.
+- 2025-12-11 — Phase 0: app shell, launcher, logging, tests.
+- 2025-12-11 — Phase 1: Local import & export (CSV/TXT), dataset model.
+- 2025-12-11 — Phase 2: Graphing core and `GraphPanel` UI.
+- 2025-12-11 — Phase 3 & 4: Dataset metadata and favorites.
+- 2025-12-11 — Phase 5: Projects & sessions (save/restore snapshots).
+- 2025-12-11 — Phase 6: Notes & Annotations (NoteModel, NoteRepo, UI, overlays).
+- 2025-12-11 — Phase 7: NIST line search/provider, overlay manager, tooltips, UI/UX improvements.
+- 2025-12-11 — Phase 8: Solar System (PDS) search, PlanetModel/Repo, SolarSystemSearchPanel, sample fixture, and integration test.
+# Patch Log
+
+This patch log contains a minimal, unique record of changes:
+
+- 2025-12-11 — Initial repo scaffolding and README created.
+- 2025-12-11 — Added `data/local/`, `.gitignore`, and `data/local/README.md`.
+- 2025-12-11 — Phase 0: app shell, launcher, logging, tests.
+- 2025-12-11 — Phase 1: Local import & export (CSV/TXT), dataset model.
+- 2025-12-11 — Phase 2: Graphing core and `GraphPanel` UI.
+- 2025-12-11 — Phase 3 & 4: Dataset metadata and favorites.
+- 2025-12-11 — Phase 5: Projects & sessions (save/restore snapshots).
+- 2025-12-11 — Phase 6: Notes & Annotations (NoteModel, NoteRepo, UI, overlays).
+- 2025-12-11 — Phase 7: NIST line search/provider, overlay manager, tooltips, UX polish.
+- 2025-12-11 — Phase 8: Solar System (PDS) search including `PdsClient`, `pds_parser`, `PlanetSearcher`, `PlanetModel`, `PlanetRepo`, `SolarSystemSearchPanel`, sample fixture, and integration test.
+
+# Patch Log
+
+This patch log contains a minimal record of changes:
+
+- 2025-12-11 — Initial repo scaffolding and README created.
+- 2025-12-11 — Added `data/local/`, `.gitignore` updates, and `data/local/README.md`.
+- 2025-12-11 — Phase 0 completed (app shell, launcher, logging, basic tests).
+- 2025-12-11 — Phase 1 completed (local import/export): CSV/TXT importer and exporter, dataset model.
+- 2025-12-11 — Phase 2 completed (graphing): GraphManager, DatasetViewModel, color management, GraphPanel.
+- 2025-12-11 — Phase 3 & 4 completed (metadata & favorites): dataset metadata handling and favorites repo/UI.
+- 2025-12-11 — Phase 5 completed (projects/sessions): Project model, repo, UI, and snapshots.
+- 2025-12-11 — Phase 6 implemented: notes and annotations and overlay UI; tests added.
+- 2025-12-11 — Phase 7 implemented: NIST line search and overlays, hover tooltips, inline editing, overlay toggles.
+- 2025-12-11 — Phase 8 implemented: PDS solar system search, planet model, search panel, and load-to-graph pipeline; sample PDS fixture and tests added.
+
+# Patch Log
+
 This patch log contains a minimal record of changes:
 
 - 2025-12-11 — Initial repo scaffolding and README created. See `README.md` for starting instructions.

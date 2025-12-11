@@ -1,0 +1,9 @@
+{
+  "id": "jupiter_sample_1",
+  "planet": "Jupiter",
+  "x": [350.0, 400.0, 450.0, 500.0, 550.0],
+  "y": [0.15, 0.12, 0.10, 0.20, 0.25],
+  "units_x": "nm",
+  "units_y": "reflectance",
+  "metadata": {"source": "PDS Geosciences", "instrument": "Example"}
+}

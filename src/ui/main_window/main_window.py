@@ -3,6 +3,7 @@ from PySide6.QtGui import QAction
 from src.ui.panels.project_panel.project_panel import ProjectPanel
 from src.ui.panels.graph_panel.graph_panel import GraphPanel
 from src.ui.panels.search_panel.nist_panel import NistSearchPanel
+from src.ui.panels.search_panel.solar_panel import SolarSystemSearchPanel
 from src.ui.panels.notes_panel.notes_panel import NotesPanel
 from src.domain.datasets.registry import get_dataset_repo
 from pathlib import Path
@@ -107,6 +108,12 @@ class MainWindow(QMainWindow):
         nist_dock = QDockWidget('NIST Search', self)
         nist_dock.setWidget(self.nist_panel)
         self.addDockWidget(Qt.LeftDockWidgetArea, nist_dock)
+
+        # Solar system (PDS) search panel dock on the left
+        self.solar_panel = SolarSystemSearchPanel(self)
+        solar_dock = QDockWidget('Solar System (PDS) Search', self)
+        solar_dock.setWidget(self.solar_panel)
+        self.addDockWidget(Qt.LeftDockWidgetArea, solar_dock)
 
         self.current_project_name = None
         # Try to auto-load last project from storage if configured

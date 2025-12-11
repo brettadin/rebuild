@@ -1,5 +1,15 @@
 # Dev Log
 
+This is the project 'dev log' — record decisions, notes, system constraints, and other design details during implementation.
+
+- 2025-12-11: Created `data/local/` and added `.gitignore` guidance; added `WorkOrder.md` reference.
+- 2025-12-11: Implemented Phase 0 (Foundation & Skeleton) with a minimal PySide6 app shell, launcher, and tests.
+- 2025-12-11: Implemented Phase 6 (Notes & Annotations) including `NoteModel`, `NoteRepo`, `NotesPanel`, and annotation overlays; added tests.
+- 2025-12-11: Implemented Phase 7 (NIST) including `NistClient`, `nist_parser`, `LineSearcher`, `NistSearchPanel`, overlay manager, and UX improvements (click-to-create, tooltips, inline edits, overlay toggles).
+- 2025-12-11: Implemented Phase 8 (PDS/Solar System): `PdsClient`, `pds_parser`, `PlanetSearcher`, `PlanetModel`, `PlanetRepo`, `SolarSystemSearchPanel`, and sample PDS fixture for Jupiter; added tests for end-to-end search and load.
+
+# Dev Log
+
 This is the project 'dev log' — record decisions, notes, system constraints, and other design details during implementation. Each change should append a short entry with a date, the change summary, and the relevant context or PR link.
 
 - 2025-12-11: Created `data/local/` for locally uploaded files and updated `.gitignore` to ignore data and cache folders; included `data/local/README.md` for usage guidance. Added `WorkOrder.md` link to top-level README and docs/index.
