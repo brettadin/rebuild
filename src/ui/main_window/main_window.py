@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QLabel, QMenuBar, QMenu, QDockWidget
 from PySide6.QtGui import QAction
 from src.ui.panels.project_panel.project_panel import ProjectPanel
 from src.ui.panels.graph_panel.graph_panel import GraphPanel
+from src.ui.panels.notes_panel.notes_panel import NotesPanel
 from src.domain.datasets.registry import get_dataset_repo
 from pathlib import Path
 from src.ui.panels.favorites_panel.favorites_panel import FavoritesPanel
@@ -94,6 +95,12 @@ class MainWindow(QMainWindow):
         fav_dock.setWidget(self.favorites_panel)
         self.addDockWidget(Qt.LeftDockWidgetArea, fav_dock)
 
+        # Notes panel dock on the left (below favorites if present)
+        self.notes_panel = NotesPanel(self)
+        notes_dock = QDockWidget("Notes", self)
+        notes_dock.setWidget(self.notes_panel)
+        self.addDockWidget(Qt.LeftDockWidgetArea, notes_dock)
+
         self.current_project_name = None
         # Try to auto-load last project from storage if configured
         cfg = load_config()
@@ -133,6 +140,19 @@ class MainWindow(QMainWindow):
         try:
             # Update favorites panel
             self.favorites_panel.set_current_project(project)
+            # Restore notes for the project
+            from src.notes.registry import get_note_repo
+            note_repo = get_note_repo()
+            note_repo.clear()
+            for n in getattr(project, 'notes', []):
+                from src.notes.note_model import NoteModel
+                nm = NoteModel.from_dict(n) if hasattr(NoteModel, 'from_dict') else NoteModel(**n)
+                note_repo.add_note(nm)
+            # Refresh notes UI
+            try:
+                self.notes_panel.refresh_notes_list()
+            except Exception:
+                pass
             from src.platform.launcher import load_config
             cfg = load_config()
             storage_path = cfg.get('paths', {}).get('storage', 'data/storage')

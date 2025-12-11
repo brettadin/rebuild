@@ -3,6 +3,7 @@ from matplotlib.figure import Figure
 from src.graphing.core.dataset_view_model import DatasetViewModel
 from src.graphing.core.color_manager import ColorManager
 from src.domain.datasets.dataset_model import DatasetModel
+from src.graphing.overlays.annotation_markers import AnnotationManager, Annotation
 
 
 class GraphManager:
@@ -11,6 +12,7 @@ class GraphManager:
         self.traces: Dict[str, DatasetViewModel] = {}
         self.color_manager = ColorManager()
         self.unit_conversion = False
+        self.annotation_manager = AnnotationManager()
 
     def add_dataset(self, ds: DatasetModel, label: Optional[str] = None, color: Optional[str] = None):
         if ds.id in self.traces:
@@ -38,6 +40,8 @@ class GraphManager:
         if self.unit_conversion:
             x = self._convert_units(x, vm.dataset.metadata.units_x)
         ax.plot(x, y, label=vm.label, color=vm.color)
+        # draw annotations after plotting
+        self.annotation_manager.draw(ax)
         ax.legend()
         self.figure.canvas.draw_idle()
 
@@ -50,8 +54,15 @@ class GraphManager:
             if self.unit_conversion:
                 x = self._convert_units(x, vm.dataset.metadata.units_x)
             ax.plot(x, y, label=vm.label, color=vm.color)
+        # draw annotations after plotting
+        self.annotation_manager.draw(ax)
         ax.legend()
         self.figure.canvas.draw_idle()
+
+    def set_annotations(self, annotations: List[Annotation]):
+        self.annotation_manager.set_annotations(annotations)
+        if self.figure is not None:
+            self._redraw()
 
     def set_unit_conversion(self, enabled: bool):
         self.unit_conversion = enabled

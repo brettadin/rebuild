@@ -1,6 +1,7 @@
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QListWidget, QLabel, QHBoxLayout, QFileDialog
 from pathlib import Path
+from src.notes.registry import get_note_repo
 from src.projects.project_repo import ProjectRepo
 from src.projects.project_model import ProjectModel
 
@@ -98,6 +99,18 @@ class ProjectPanel(QWidget):
             for seg, ids in fav_dict.items():
                 for ident in ids:
                     fav_repo.add_favorite(seg, ident)
+            # Restore notes: project's notes stored as list of dicts
+            try:
+                from src.notes.registry import get_note_repo
+                from src.notes.note_model import NoteModel
+                note_repo = get_note_repo()
+                note_repo.clear()
+                for n in getattr(project, 'notes', []):
+                    nm = NoteModel.from_dict(n) if hasattr(NoteModel, 'from_dict') else NoteModel(**n)
+                    note_repo.add_note(nm)
+            except Exception:
+                # Non-fatal, if notes can't be restored we continue
+                pass
         except Exception:
             # non-fatal, project loading still happens via signal
             pass
@@ -141,7 +154,7 @@ class ProjectPanel(QWidget):
             favorites=favs,
             graph_config={},
             datasets=datasets,
-            notes=[],
+            notes=[n.to_dict() for n in get_note_repo().list()] if get_note_repo() else [],
         )
         # debug logging omitted in production
         saved_path = self.repo.save_project(project)
@@ -184,6 +197,12 @@ class ProjectPanel(QWidget):
             except Exception:
                 graph_conf = {}
         project = ProjectModel(name=name, description=None, dataset_ids=dataset_ids, favorites=favs, graph_config=graph_conf, datasets=datasets)
+        # attach notes snapshot
+        try:
+            from src.notes.registry import get_note_repo
+            project.notes = [n.to_dict() for n in get_note_repo().list()]
+        except Exception:
+            project.notes = []
         self.repo.save_project(project, filename=fname)
         self.refresh_project_list()
 
