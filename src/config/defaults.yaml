@@ -1,0 +1,14 @@
+app:
+  title: "Rebuild - Spectroscopy"
+  width: 1000
+  height: 700
+  debug: false
+
+providers:
+  nist: true
+  hitran: true
+  mast: false
+  pds: false
+
+logging:
+  level: INFO

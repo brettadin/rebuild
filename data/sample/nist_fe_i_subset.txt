@@ -1,0 +1,4 @@
+# NIST Fe I subset placeholder
+
+# This is a placeholder file; DO NOT PUSH REAL DATA WITH UNDOCUMENTED OR UNREFERENCED ORIGIN TO THE REPO.
+# Add a small subset downloaded from NIST and include provenance in `docs/references/nist_fe_i_subset.md`.
